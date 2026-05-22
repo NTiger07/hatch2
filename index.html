@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ProdDash — Product Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="sidebar-overlay" id="overlay"></div>
+
+<!-- ── Sidebar ── -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <span>ProdDash<sub>PRO</sub></span>
+  </div>
+
+  <nav class="nav-section">
+    <p class="nav-label">Main</p>
+
+    <a class="nav-link active" data-page="dashboard" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+        <rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/>
+      </svg>
+      Dashboard
+    </a>
+
+    <a class="nav-link" data-page="products" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 01-8 0"/>
+      </svg>
+      Products
+      <span class="nav-badge" id="productsBadge">–</span>
+    </a>
+
+
+  </nav>
+
+  <div class="sidebar-profile">
+    <div class="avatar">FO</div>
+    <div class="profile-info">
+      <p>Favour Olaleru</p>
+      <span>Admin</span>
+    </div>
+  </div>
+</aside>
+
+<!-- ── Main wrapper ── -->
+<div class="main-wrapper">
+
+  <header class="header">
+    <button class="menu-btn" id="menuBtn" aria-label="Toggle sidebar">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+
+    <div class="search-wrap">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="search" id="searchInput" placeholder="Search products by name…" autocomplete="off" />
+    </div>
+
+  </header>
+
+  <main class="page-content">
+
+    <!-- ══════════ DASHBOARD PAGE ══════════ -->
+    <section class="page-section active" id="page-dashboard">
+
+      <div class="dash-welcome">
+        <div>
+          <h1 class="page-title" id="dashGreeting">Dashboard</h1>
+          <p class="page-subtitle" id="dashDate"></p>
+        </div>
+        <button class="btn-go-products" id="btnGoProducts">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          Browse Products
+        </button>
+      </div>
+
+      <div class="stats-strip">
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#eef2ff;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 01-8 0"/>
+            </svg>
+          </div>
+          <div>
+            <div class="stat-val" id="statTotal">–</div>
+            <div class="stat-lbl">Total Products</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#f0fdf4;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <div>
+            <div class="stat-val" id="statInStock">–</div>
+            <div class="stat-lbl">In Stock</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#fefce8;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#ca8a04" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+          </div>
+          <div>
+            <div class="stat-val" id="statLow">–</div>
+            <div class="stat-lbl">Low Stock</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#fdf2f8;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#a21caf" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+            </svg>
+          </div>
+          <div>
+            <div class="stat-val" id="statAvgPrice">–</div>
+            <div class="stat-lbl">Avg. Price</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-2col">
+        <div class="dash-widget">
+          <div class="dash-widget-hd">
+            <h3 class="dash-widget-title">Inventory by Category</h3>
+          </div>
+          <div id="categoryBars"></div>
+        </div>
+
+        <div class="dash-widget">
+          <div class="dash-widget-hd">
+            <h3 class="dash-widget-title">Top Rated Products</h3>
+            <span class="dash-widget-sub">click to preview</span>
+          </div>
+          <div id="topRatedList"></div>
+        </div>
+      </div>
+
+      <div class="dash-widget">
+        <div class="dash-widget-hd">
+          <h3 class="dash-widget-title">Stock Alerts</h3>
+          <span class="alert-count-chip" id="alertCount"></span>
+        </div>
+        <div id="stockAlerts"></div>
+      </div>
+
+    </section>
+
+    <!-- ══════════ PRODUCTS PAGE ══════════ -->
+    <section class="page-section" id="page-products">
+
+      <div class="toolbar">
+        <div>
+          <h1 class="page-title">All Products</h1>
+          <p class="page-subtitle">Browse and manage your product catalogue</p>
+        </div>
+        <div class="toolbar-right">
+          <span class="results-count" id="resultsCount"></span>
+          <select id="categoryFilter">
+            <option value="">All Categories</option>
+          </select>
+          <button class="btn-clear" id="clearFilters">Clear Filters</button>
+        </div>
+      </div>
+
+      <div id="productsGrid">
+        <div id="loadingState">
+          <div class="spinner"></div>
+          <p>Fetching products…</p>
+        </div>
+        <div id="errorState">
+          <div class="error-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+          </div>
+          <h3>Couldn't load products</h3>
+          <p>Something went wrong while fetching data. Check your connection and try again.</p>
+          <button class="btn-retry" id="retryBtn">Retry</button>
+        </div>
+        <div id="emptyState">
+          <div class="empty-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </div>
+          <h3>No products found</h3>
+          <p>Try adjusting your search or category filter.</p>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+</div>
+
+<!-- ══════════ PRODUCT DETAIL MODAL ══════════ -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+
+    <button class="modal-close" id="modalClose" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+
+    <!-- Image column -->
+    <div class="modal-img-col">
+      <div class="modal-img-main">
+        <img id="modalImg" src="" alt="" />
+        <span class="modal-discount-badge" id="modalDiscount"></span>
+      </div>
+      <div class="modal-thumbs" id="modalThumbs"></div>
+    </div>
+
+    <!-- Info column -->
+    <div class="modal-info-col">
+      <div class="modal-meta-row">
+        <span class="card-category" id="modalCategory"></span>
+        <span class="modal-brand-tag" id="modalBrand"></span>
+      </div>
+
+      <h2 class="modal-title-text" id="modalTitle"></h2>
+
+      <div class="modal-rating-row" id="modalRatingRow"></div>
+
+      <div class="modal-price-block" id="modalPriceBlock"></div>
+
+      <div class="modal-divider"></div>
+
+      <div class="modal-desc-wrap">
+        <p class="modal-desc-label">Description</p>
+        <p class="modal-desc" id="modalDesc"></p>
+      </div>
+
+      <div id="modalStockBlock"></div>
+
+      <div class="modal-divider"></div>
+
+      <div class="modal-specs" id="modalSpecs"></div>
+    </div>
+
+  </div>
+</div>
+
+<script src="index.js"></script>
+</body>
+</html>

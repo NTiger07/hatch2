@@ -1,0 +1,12 @@
+build a responsive product dashboard
+Candidate must build:
+    -frontend reponsive dash ui
+    -side bar nav
+    -product cards
+    -search bar
+    -responsive layout
+JS
+    -fetch product data from api
+    -fileter/search products
+    -dynamic renderinng
+    -loading and error handling
