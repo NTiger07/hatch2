@@ -1,12 +1,6 @@
-/* ══════════════════════════════════════
-   STATE
-══════════════════════════════════════ */
 let allProducts  = [];
 let currentPage  = 'dashboard';
 
-/* ══════════════════════════════════════
-   DOM REFS
-══════════════════════════════════════ */
 const grid         = document.getElementById('productsGrid');
 const loading      = document.getElementById('loadingState');
 const errorState   = document.getElementById('errorState');
@@ -145,9 +139,6 @@ const FALLBACK = [
   },
 ];
 
-/* ══════════════════════════════════════
-   MOBILE SIDEBAR
-══════════════════════════════════════ */
 menuBtn.addEventListener('click', () => {
   sidebar.classList.toggle('open');
   overlay.classList.toggle('open');
@@ -157,9 +148,6 @@ overlay.addEventListener('click', () => {
   overlay.classList.remove('open');
 });
 
-/* ══════════════════════════════════════
-   ROUTER
-══════════════════════════════════════ */
 function initRouter() {
   document.querySelectorAll('.nav-link[data-page]').forEach(link => {
     link.addEventListener('click', e => {
@@ -189,9 +177,6 @@ function navigateTo(pageId) {
     : 'Search products…';
 }
 
-/* ══════════════════════════════════════
-   FETCH
-══════════════════════════════════════ */
 async function fetchProducts() {
   showLoading(true);
   errorState.style.display = 'none';
@@ -223,9 +208,6 @@ function clearCards() {
   Array.from(grid.querySelectorAll('.product-card')).forEach(el => el.remove());
 }
 
-/* ══════════════════════════════════════
-   STATS
-══════════════════════════════════════ */
 function updateStats() {
   const inStock  = allProducts.filter(p => p.stock > 10).length;
   const lowStock = allProducts.filter(p => p.stock > 0 && p.stock <= 10).length;
@@ -237,9 +219,6 @@ function updateStats() {
   document.getElementById('statAvgPrice').textContent = '$' + avg.toFixed(0);
 }
 
-/* ══════════════════════════════════════
-   DASHBOARD
-══════════════════════════════════════ */
 function renderDashboard() {
   const hour = new Date().getHours();
   const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
@@ -346,9 +325,6 @@ function renderStockAlerts() {
   });
 }
 
-/* ══════════════════════════════════════
-   PRODUCTS PAGE
-══════════════════════════════════════ */
 function populateCategories() {
   const cats = [...new Set(allProducts.map(p => p.category))].sort();
   catFilter.innerHTML = '<option value="">All Categories</option>';
@@ -428,18 +404,13 @@ function buildCard(p) {
   return card;
 }
 
-/* ══════════════════════════════════════
-   MODAL
-══════════════════════════════════════ */
 function openModal(p) {
   const mainImg = document.getElementById('modalImg');
 
-  /* ── Image ── */
   mainImg.src = p.thumbnail;
   mainImg.alt = p.title;
   mainImg.onerror = () => { mainImg.src = 'https://placehold.co/400x400/f1f5f9/94a3b8?text=No+Image'; };
 
-  /* ── Thumbnails ── */
   const thumbsEl = document.getElementById('modalThumbs');
   const images   = Array.isArray(p.images) && p.images.length ? p.images : [p.thumbnail];
 
@@ -458,7 +429,6 @@ function openModal(p) {
     });
   });
 
-  /* ── Discount badge ── */
   const discBadge = document.getElementById('modalDiscount');
   if (p.discountPercentage > 0) {
     discBadge.textContent = `-${Math.round(p.discountPercentage)}%`;
@@ -467,7 +437,6 @@ function openModal(p) {
     discBadge.style.display = 'none';
   }
 
-  /* ── Meta ── */
   document.getElementById('modalCategory').textContent = formatCategory(p.category);
 
   const brandEl = document.getElementById('modalBrand');
@@ -478,17 +447,14 @@ function openModal(p) {
     brandEl.style.display = 'none';
   }
 
-  /* ── Title ── */
   document.getElementById('modalTitle').textContent = p.title;
 
-  /* ── Rating ── */
   const reviewCount = p.reviews?.length ?? Math.round(p.rating * 17);
   document.getElementById('modalRatingRow').innerHTML = `
     <span class="modal-stars">${renderStars(p.rating)}</span>
     <span class="modal-rating-num">${p.rating.toFixed(1)}</span>
     <span class="modal-reviews">(${reviewCount} review${reviewCount !== 1 ? 's' : ''})</span>`;
 
-  /* ── Price ── */
   const originalPrice = p.discountPercentage > 0
     ? p.price / (1 - p.discountPercentage / 100)
     : null;
@@ -499,11 +465,9 @@ function openModal(p) {
     ${originalPrice ? `<span class="modal-price-original">$${originalPrice.toFixed(2)}</span>` : ''}
     ${savings > 0 ? `<span class="modal-savings">You save $${savings.toFixed(2)}</span>` : ''}`;
 
-  /* ── Description ── */
   document.getElementById('modalDesc').textContent =
     p.description || 'No description available for this product.';
 
-  /* ── Stock progress ── */
   const maxForBar  = Math.max(p.stock, 100);
   const pct        = ((p.stock / maxForBar) * 100).toFixed(1);
   const fillClass  = p.stock === 0 ? 'fill-red' : p.stock <= 10 ? 'fill-yellow' : 'fill-green';
@@ -523,7 +487,6 @@ function openModal(p) {
       </span>
     </div>`;
 
-  /* ── Specs ── */
   const specs = [];
   if (p.brand)                specs.push(['Brand',      p.brand]);
   if (p.sku)                  specs.push(['SKU',        p.sku]);
@@ -542,7 +505,6 @@ function openModal(p) {
         </div>`).join('')
     : '';
 
-  /* ── Open ── */
   modalBackdrop.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -556,9 +518,6 @@ document.getElementById('modalClose').addEventListener('click', closeModal);
 modalBackdrop.addEventListener('click', e => { if (e.target === modalBackdrop) closeModal(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-/* ══════════════════════════════════════
-   EVENTS
-══════════════════════════════════════ */
 let debounceTimer;
 searchInput.addEventListener('input', () => {
   if (currentPage !== 'products') navigateTo('products');
@@ -576,9 +535,6 @@ clearBtn.addEventListener('click', () => {
 
 retryBtn.addEventListener('click', fetchProducts);
 
-/* ══════════════════════════════════════
-   HELPERS
-══════════════════════════════════════ */
 function stockInfo(stock) {
   if (stock === 0)  return { label: 'Out of Stock', cls: 'out-stock' };
   if (stock <= 10)  return { label: `Low — ${stock} left`, cls: 'low-stock' };
@@ -604,8 +560,5 @@ function escHtml(str) {
     .replace(/"/g, '&quot;');
 }
 
-/* ══════════════════════════════════════
-   BOOT
-══════════════════════════════════════ */
 initRouter();
 fetchProducts();
